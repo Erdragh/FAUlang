@@ -1,11 +1,15 @@
 package com.github.erdragh.faulang;
 
+import com.github.erdragh.faulang.einlesegeraet.Einlesegeraet;
+import com.github.erdragh.faulang.symbol.Symbol;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Haupt {
 
@@ -50,6 +54,12 @@ public class Haupt {
   }
 
   private static void faulen(String skript) {
+    Einlesegeraet einlesegeraet = new Einlesegeraet(skript);
+    List<Symbol> symbole = einlesegeraet.symboleEinlesen();
+
+    for (Symbol symbol : symbole) {
+      System.out.println(symbol);
+    }
   }
 
   public static void fehler(int zeile, String grund) {

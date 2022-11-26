@@ -5,7 +5,9 @@ import com.github.erdragh.faulang.symbol.Symbol;
 import com.github.erdragh.faulang.symbol.SymbolTyp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.github.erdragh.faulang.symbol.SymbolTyp.*;
 
@@ -15,6 +17,25 @@ public class Einlesegeraet {
     private int start = 0;
     private int aktuell = 0;
     private int zeile = 1;
+
+    private static final Map<String, SymbolTyp> schluesselwoerter;
+
+    static {
+        schluesselwoerter = new HashMap<>();
+        schluesselwoerter.put("Verum", VERUM);
+        schluesselwoerter.put("Falsum", FALSUM);
+        schluesselwoerter.put("AbbildungVon", ABBILDUNG_VON);
+        schluesselwoerter.put("Nach", NACH);
+        schluesselwoerter.put("Verstanden?", VERSTANDEN);
+        schluesselwoerter.put("Ja", JA);
+        schluesselwoerter.put("Nein?Ok", NEIN_OK);
+        schluesselwoerter.put("Versuche", VERSUCHE);
+        schluesselwoerter.put("Scheitere", SCHEITERE);
+        schluesselwoerter.put("Sei", SEI);
+        schluesselwoerter.put("Wenn", WENN);
+        schluesselwoerter.put("Dann", DANN);
+        schluesselwoerter.put("Sonst", SONST);
+    }
 
     public Einlesegeraet(String quelle) {
         this.quelle = quelle;
@@ -57,11 +78,23 @@ public class Einlesegeraet {
             default:
                 if (Character.isDigit(z)) {
                     zahl();
+                } else if (istAlpha(z)) {
+                    bezeichner();
                 } else {
                     Haupt.fehler(zeile, "lern besser schreiben, falsches Zeichen!");
                 }
                 break;
         }
+    }
+
+    private void bezeichner() {
+        while (istAlphaZahlisch(vorausschauen())) fortschreiten();
+
+        String text = quelle.substring(start, aktuell);
+        SymbolTyp typ = schluesselwoerter.get(text);
+        if (typ == null) typ = BEZEICHNER;
+
+        symbolHinzufuegen(typ);
     }
 
     private void zahl() {
@@ -107,6 +140,16 @@ public class Einlesegeraet {
     private char zweiVorausschauen() {
         if (aktuell + 1 >= quelle.length()) return '\0';
         return quelle.charAt(aktuell + 1);
+    }
+
+    private boolean istAlpha(char z) {
+        return (z >= 'a' && z <= 'z') || (z >= 'A' && z <= 'Z') || z == '_';
+    }
+
+    private boolean istAlphaZahlisch(char z) {
+        // Fragezeichen muss hier auch behandlet werden, damit
+        // das Verstanden? Schlüsselwort funktioniert
+        return istAlpha(z) || Character.isDigit(z) || z == '?';
     }
 
     private boolean istAmEnde() {

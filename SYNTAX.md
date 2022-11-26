@@ -2,10 +2,8 @@
 
 Das hier ist eine Sammlung an Ideen für die Syntax der FAUlang.
 
-* Versuch 1:
-
   ```
-  pruefungAnmelden: Abbildung Von {} Nach Erfuelltheit Verstanden?
+  pruefungAnmelden: AbbildungVon {} Nach Erfuelltheit Verstanden?
     Wenn CampoFunktioniert{} Dann Verstanden?
       Ja Verum
     Nein?Ok
@@ -14,27 +12,27 @@ Das hier ist eine Sammlung an Ideen für die Syntax der FAUlang.
     Nein?Ok
   Nein?Ok
   
-  pruefungAntreten: Abbildung Von {} Nach Zahl Verstanden?
+  pruefungAntreten: AbbildungVon {} Nach Zahl Verstanden?
     Ja Zufall{0, 100}
   Nein?Ok
   
-  whatsApp: Abbildung Von {nachricht: Zeichenkette} Nach Nichts Verstanden?
+  whatsApp: AbbildungVon {nachricht: Zeichenkette} Nach Nichts Verstanden?
     Drucken{nachricht}
   Nein?Ok
   
-  exmatrikuliere: Abbildung Von {} Nach Nichts Verstanden?
+  exmatrikuliere: AbbildungVon {} Nach Nichts Verstanden?
     Drucken{"Kein Bock Mehr"}
   Nein?Ok
   
-  problemAusgeben: Abbildung Von {problem: Problem} Nach Nichts Verstanden?
+  problemAusgeben: AbbildungVon {problem: Problem} Nach Nichts Verstanden?
     Drucken{problem.nachricht}
   Nein?Ok
   
-  istBestanden: Abbildung Von {punktezahl: Zahl} Nach Erfuelltheit Verstanden?
+  istBestanden: AbbildungVon {punktezahl: Zahl} Nach Erfuelltheit Verstanden?
     Ja punktestand > 50
   Nein?Ok
     
-  haupt: Abbildung Von {parameter: Menge} Nach Nichts Verstanden?
+  haupt: AbbildungVon {parameter: Menge} Nach Nichts Verstanden?
     Versuche Verstanden?
       Sei angemeldet: Erfuelltheit pruefungAnmelden{}
       Wenn angemeldet Dann Verstanden?

@@ -42,11 +42,37 @@ public class Einlesegeraet {
             case '-': symbolHinzufuegen(MINUS); break;
             case '*': symbolHinzufuegen(STERN); break;
             case '/': symbolHinzufuegen(SCHRAEGSTRICH); break;
+            // Kommentare gehen bis ans ende der Zeile
+            case '#': while (vorausschauen() != '\n' && !istAmEnde()) fortschreiten();
             case '!': symbolHinzufuegen(vergleichen('&') ? NICHT_UND : NICHT);
+            // TODO: Weißplatz nicht ignorieren.
+            case ' ':
+            case '\r':
+            case '\t':
+                break;
+            case '\n':
+                zeile++;
+                break;
+            case '"': zeichenkette(); break;
             default:
                 Haupt.fehler(zeile, "lern besser schreiben, falsches Zeichen!");
                 break;
         }
+    }
+
+    private void zeichenkette() {
+        while (vorausschauen() != '"' && istAmEnde()) {
+            if (vorausschauen() == '\n') zeile++;
+            fortschreiten();
+        }
+        if (istAmEnde()) {
+            Haupt.fehler(zeile, "Zeichenkette wurde nicht geschlossen.");
+            return;
+        }
+        fortschreiten();
+
+        String wert = quelle.substring(start + 1, aktuell - 1);
+        symbolHinzufuegen(ZEICHENKETTE, wert);
     }
 
     private boolean vergleichen(char erwartet) {
@@ -55,6 +81,11 @@ public class Einlesegeraet {
 
         aktuell++;
         return true;
+    }
+
+    private char vorausschauen() {
+        if (istAmEnde()) return '\0';
+        return quelle.charAt(aktuell);
     }
 
     private boolean istAmEnde() {

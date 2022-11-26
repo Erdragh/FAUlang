@@ -1,5 +1,6 @@
 package com.github.erdragh.faulang.einlesegeraet;
 
+import com.github.erdragh.faulang.Haupt;
 import com.github.erdragh.faulang.symbol.Symbol;
 import com.github.erdragh.faulang.symbol.SymbolTyp;
 
@@ -41,7 +42,19 @@ public class Einlesegeraet {
             case '-': symbolHinzufuegen(MINUS); break;
             case '*': symbolHinzufuegen(STERN); break;
             case '/': symbolHinzufuegen(SCHRAEGSTRICH); break;
+            case '!': symbolHinzufuegen(vergleichen('&') ? NICHT_UND : NICHT);
+            default:
+                Haupt.fehler(zeile, "lern besser schreiben, falsches Zeichen!");
+                break;
         }
+    }
+
+    private boolean vergleichen(char erwartet) {
+        if (istAmEnde()) return false;
+        if (quelle.charAt(aktuell) != erwartet) return false;
+
+        aktuell++;
+        return true;
     }
 
     private boolean istAmEnde() {

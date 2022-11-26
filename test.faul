@@ -1,0 +1,46 @@
+pruefungAnmelden: AbbildungVon {} Nach Erfuelltheit Verstanden?
+  Wenn CampoFunktioniert{} Dann Verstanden?
+    Ja Verum
+  Nein?Ok
+  Sonst Verstanden?
+    Ja Falsum
+  Nein?Ok
+Nein?Ok
+
+pruefungAntreten: AbbildungVon {} Nach Zahl Verstanden?
+  Ja Zufall{0, 100}
+Nein?Ok
+
+whatsApp: AbbildungVon {nachricht: Zeichenkette} Nach Nichts Verstanden?
+  Drucken{nachricht}
+Nein?Ok
+
+exmatrikuliere: AbbildungVon {} Nach Nichts Verstanden?
+  Drucken{"Kein Bock Mehr"}
+Nein?Ok
+
+problemAusgeben: AbbildungVon {problem: Problem} Nach Nichts Verstanden?
+  Drucken{problem.nachricht}
+Nein?Ok
+
+istBestanden: AbbildungVon {punktezahl: Zahl} Nach Erfuelltheit Verstanden?
+  Ja punktestand > 50
+Nein?Ok
+
+haupt: AbbildungVon {parameter: Menge} Nach Nichts Verstanden?
+  Versuche Verstanden?
+    Sei angemeldet: Erfuelltheit pruefungAnmelden{}
+    Wenn angemeldet Dann Verstanden?
+    Sei ergebnis: Zahl pruefungAntreten{}
+      Wenn istBestanden{ergebnis} Dann Verstanden?
+        whatsApp{"Alter geil, ich hab in der Prüfung " + ergebnis + " Punkte"}
+      Nein?Ok
+      Sonst Verstanden?
+        exmatrikuliere{}
+      Nein?Ok
+    Nein?Ok
+  Nein?Ok
+  Scheitere An problem: Problem Verstanden?
+    problemAusgeben{problem}
+  Nein?Ok
+Nein?Ok

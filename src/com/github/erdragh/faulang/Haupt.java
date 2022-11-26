@@ -11,6 +11,8 @@ public class Haupt {
 
   public static final String NAME = "faul";
 
+  static boolean sollteExmatrikulieren = false;
+
   public static void main(String[] parameter) throws IOException {
     if (parameter.length > 1) {
       System.out.println("Benutzen: " + NAME + " [Skript]");
@@ -25,6 +27,9 @@ public class Haupt {
   private static void dateiFaulen(String skriptPfad) throws IOException {
     byte[] dateiAlsBytes = Files.readAllBytes(Paths.get(skriptPfad));
     faulen(new String(dateiAlsBytes, Charset.defaultCharset()));
+    // Falls der dumme Nutzer mal wieder Scheiße gebaut hat, sollte
+    // der Interpretierer beendet werden.
+    if (sollteExmatrikulieren) System.exit(65);
   }
 
   private static void eingabeFaulen() throws IOException {
@@ -36,11 +41,21 @@ public class Haupt {
       String zeile = leser.readLine();
       if (zeile == null) break;
       faulen(zeile);
+      sollteExmatrikulieren = false;
     }
   }
 
   private static void faulen(String skript) {
-    System.out.println("FAUlang wird nun folgendes Skript korrigieren:");
-    System.out.println(skript);
+  }
+
+  public static void fehler(int zeile, String grund) {
+    anzeigeIstRaus(zeile, "", grund);
+  }
+
+  private static void anzeigeIstRaus(int zeile, String ort, String grund) {
+    System.err.println("Antrag auf Exmatrikulation: https://www.fau.de/files/2013/10/Exmatrikulation.pdf");
+    System.err.println("Du Idiot hast einen Fehler in Zeile: " + zeile + " gemacht: " + grund);
+    if (ort != null) System.err.println("Komm, geh da hin und entschuldige dich: " + ort);
+    sollteExmatrikulieren = true;
   }
 }

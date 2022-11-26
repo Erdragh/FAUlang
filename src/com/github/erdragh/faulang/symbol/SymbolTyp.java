@@ -3,7 +3,7 @@ package com.github.erdragh.faulang.symbol;
 public enum SymbolTyp {
     // Einzeichige Symbole
     LINKE_GESCHWEIFTE_KLAMMER, RECHTE_GESCHWEIFTE_KLAMMER, DOPPELPUNKT, GROESSER_ALS,
-    PLUS, MINUS, STERN, SCHRAEGSTRICH, NICHT,
+    PLUS, MINUS, STERN, SCHRAEGSTRICH, NICHT, KOMMA, PUNKT,
 
     // Zweizeichige Symbole
     NICHT_UND,

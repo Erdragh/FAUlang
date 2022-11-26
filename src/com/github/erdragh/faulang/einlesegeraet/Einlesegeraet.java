@@ -63,8 +63,11 @@ public class Einlesegeraet {
             case '-': symbolHinzufuegen(MINUS); break;
             case '*': symbolHinzufuegen(STERN); break;
             case '/': symbolHinzufuegen(SCHRAEGSTRICH); break;
+            case ',': symbolHinzufuegen(KOMMA); break;
+            case '.': symbolHinzufuegen(PUNKT); break;
             // Kommentare gehen bis ans ende der Zeile
             case '#': while (vorausschauen() != '\n' && !istAmEnde()) fortschreiten();
+            break;
             case '!': symbolHinzufuegen(vergleichen('&') ? NICHT_UND : NICHT);
             // TODO: Weißplatz nicht ignorieren.
             case ' ':
@@ -110,7 +113,7 @@ public class Einlesegeraet {
     }
 
     private void zeichenkette() {
-        while (vorausschauen() != '"' && istAmEnde()) {
+        while (vorausschauen() != '"' && !istAmEnde()) {
             if (vorausschauen() == '\n') zeile++;
             fortschreiten();
         }

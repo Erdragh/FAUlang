@@ -12,6 +12,6 @@ public class Symbol {
 
     @Override
     public String toString() {
-        return typ + " " + lexem + " " + literal;
+        return typ + " '" + lexem + "' " + (literal != null ? (literal + " ") : " ") + zeile;
     }
 }

@@ -35,7 +35,6 @@ public class Haupt {
     // der Interpretierer beendet werden.
     if (sollteExmatrikulieren) {
       System.err.println("Antrag auf Exmatrikulation: https://www.fau.de/files/2013/10/Exmatrikulation.pdf");
-      System.err.println("Du Idiot hast Fehler gemacht:");
       System.exit(65);
     }
   }
@@ -67,8 +66,8 @@ public class Haupt {
   }
 
   private static void anzeigeIstRaus(int zeile, String ort, String grund) {
-    System.err.println("in Zeile: " + zeile + " gemacht: " + grund);
-    if (ort != null) System.err.println("Komm, geh da hin und entschuldige dich: " + ort);
     sollteExmatrikulieren = true;
+    System.err.println("Fehler in Zeile: " + zeile + ": " + grund);
+    if (ort != null && !ort.equals("")) System.err.println("Komm, geh da hin und entschuldige dich: " + ort);
   }
 }

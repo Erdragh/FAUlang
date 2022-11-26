@@ -55,9 +55,25 @@ public class Einlesegeraet {
                 break;
             case '"': zeichenkette(); break;
             default:
-                Haupt.fehler(zeile, "lern besser schreiben, falsches Zeichen!");
+                if (Character.isDigit(z)) {
+                    zahl();
+                } else {
+                    Haupt.fehler(zeile, "lern besser schreiben, falsches Zeichen!");
+                }
                 break;
         }
+    }
+
+    private void zahl() {
+        while (Character.isDigit(vorausschauen())) fortschreiten();
+
+        if (vorausschauen() == '.' && Character.isDigit(zweiVorausschauen())) {
+            fortschreiten();
+
+            while (Character.isDigit(vorausschauen())) fortschreiten();
+        }
+
+        symbolHinzufuegen(ZAHL, Double.parseDouble(quelle.substring(start, aktuell)));
     }
 
     private void zeichenkette() {
@@ -86,6 +102,11 @@ public class Einlesegeraet {
     private char vorausschauen() {
         if (istAmEnde()) return '\0';
         return quelle.charAt(aktuell);
+    }
+
+    private char zweiVorausschauen() {
+        if (aktuell + 1 >= quelle.length()) return '\0';
+        return quelle.charAt(aktuell + 1);
     }
 
     private boolean istAmEnde() {
